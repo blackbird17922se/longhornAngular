@@ -1,0 +1,48 @@
+/* Layout horizontal: sidebar + contenido */
+/* Layout horizontal real */
+.sidebar-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0; // ✅ Esto cambia
+}
+
+
+.sidebar-wrapper {
+  right: 0;
+  width: 200px;
+  background-color: #2623ff;
+  transition: width 0.0s ease;
+  // z-index: 2;
+
+  &.collapsed {
+    width: 0;
+    overflow: hidden;
+  }
+}
+
+.content-wrapper {
+  left: 0px;
+  right: 60px;
+  background-color: red;
+  transition: left 0.0s ease;
+  width: calc(100vw - 200px);
+  height: 95%;
+    // position: absolute;
+  top: 0;
+  bottom: 0; // ✅ Esto cambia
+
+  &.expanded {
+    right: 0;
+    width: 100vw;
+  }
+}
+
+/* Taskbar */
+// app-taskbar {
+//   position: absolute;
+//   bottom: 0;
+//   right: 0;
+//   height: 40px;
+//   width: 100%;
+//   z-index: 1; 
+// }
