@@ -18,12 +18,12 @@ Contiene todo lo que ves: barra lateral, contenido dinámico, y barra de tareas.
     El escritorio donde se abren ventanas.
     También contiene la taskbar al fondo. -->
   <div class="content-wrapper" [class.expanded]="sidebarCollapsed">
-    <app-window *ngIf="showWindow" title="Mi Ventana" (close)="showWindow = false">
-      <p>Este es el contenido de la ventana. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente facere
-        voluptates aspernatur possimus, inventore voluptatem saepe doloribus neque odio. Et, rerum nulla aliquid illo
-        quod repellat in alias nobis animi?</p>
-    </app-window>
-
+    <ng-container *ngFor="let win of windows">
+      <app-window *ngIf="win.visible" [title]="win.title" (close)="closeWindow(win.id)"
+        (minimize)="minimizeWindow(win.id)">
+        <p>{{ win.content }}</p>
+      </app-window>
+    </ng-container>
   </div>
   <!-- barra de tareas -->
   <!-- collapsed (Input): recibe si la barra lateral está colapsada, para ajustar su ancho: -->
@@ -31,5 +31,14 @@ Contiene todo lo que ves: barra lateral, contenido dinámico, y barra de tareas.
   <!-- toggleSidebar() {
           this.sidebarCollapsed = !this.sidebarCollapsed;
         } -->
-  <app-taskbar [collapsed]="sidebarCollapsed" (toggleSidebar)="toggleSidebar()"></app-taskbar>
+  <app-taskbar [collapsed]="sidebarCollapsed" [minimizedWindows]="minimizedWindows" (toggleSidebar)="toggleSidebar()"
+    (restoreWindow)="restoreWindow($event)">
+
+    <<ng-container *ngFor="let win of windows">
+      <button *ngIf="win.minimized" (click)="restoreWindow(win.id)">
+        {{ win.title }}
+      </button>
+      </ng-container>
+
+  </app-taskbar>
 </app-desktop>

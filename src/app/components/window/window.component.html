@@ -6,7 +6,7 @@
         <!-- Primera fila: Botones de ventana (cerrar, minimizar, etc.) -->
         <div class="header-top">
             <div class="window-actions">
-                <button>−</button>
+                <button (click)="minimize.emit()">−</button>
                 <button (click)="toggleMaximize(win)">
                     {{ maximized ? '🗗' : '🗖' }}
                 </button>

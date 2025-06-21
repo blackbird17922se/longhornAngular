@@ -1,19 +1,48 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgClass } from '@angular/common'; // ✅ este es el que te falta
-
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { StartMenuComponent } from '../start-menu.component/start-menu.component';
 
 @Component({
   selector: 'app-taskbar',
   standalone: true,
   templateUrl: './taskbar.component.html',
   styleUrls: ['./taskbar.component.scss'],
-    imports: [NgClass] // ✅ aquí lo agregas
+  imports: [CommonModule, StartMenuComponent]
 })
-export class Taskbar {
-  @Input() collapsed = false; // ✅ ESTO DEBE IR AQUÍ, no dentro de ninguna función
+export class TaskbarComponent {
+
+  @Input() collapsed = false;
   @Output() toggleSidebar = new EventEmitter<void>();
+  @Input() minimizedWindows: { id: number; title: string }[] = [];
+  @Output() restoreWindow = new EventEmitter<number>();
+  @ViewChild('startButton', { read: ElementRef }) startButtonRef!: ElementRef;
+
+  startMenuVisible = false;
 
   onToggleSidebar() {
-    this.toggleSidebar.emit(); // ✅ si usas esta función, así se emite
+    this.toggleSidebar.emit();
   }
+
+  toggleStartMenu() {
+    this.startMenuVisible = !this.startMenuVisible;
+  }
+
+  // Detecta clics globales fuera del menú y botón
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInsideButton = this.startButtonRef?.nativeElement.contains(target);
+    const clickedInsideMenu = document.querySelector('app-start-menu')?.contains(target);
+
+    if (!clickedInsideButton && !clickedInsideMenu) {
+      this.startMenuVisible = false;
+    }
+  }
+
+  // Cierra el menú al presionar Esc
+  @HostListener('document:keydown.escape')
+  handleEscape() {
+    this.startMenuVisible = false;
+  }
+
 }

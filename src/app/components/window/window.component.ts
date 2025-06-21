@@ -35,6 +35,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class Window {
   @Input() title: string = 'Ventana'; // Título de la ventana, por defecto "Ventana"
   @Output() close = new EventEmitter(); // Evento que se emite al cerrar la ventana
+  @Output() minimize = new EventEmitter<void>();
+
 
   dragging: boolean = false; // Indica si la ventana está siendo arrastrada
   offsetX: number = 0; // Desplazamiento en X al arrastrar
@@ -75,23 +77,6 @@ export class Window {
 
     this.maximized = !this.maximized;
 
-    /*
-    this.maximized = !this.maximized;
-
-    if (this.maximized) {
-      // Maximiza al 100% dentro del contenedor padre
-      win.style.top = '0';
-      win.style.left = '0';
-      win.style.width = '100%';
-      win.style.height = '100%';
-    } else {
-      // Restaura a su tamaño inicial
-      win.style.top = '100px';
-      win.style.left = '100px';
-      win.style.width = '400px';
-      win.style.height = 'auto';
-    }
-      */
   }
 
   ngAfterViewInit() {
