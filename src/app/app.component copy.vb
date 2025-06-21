@@ -1,6 +1,7 @@
-import { Component, HostListener, Type } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 
 import { Desktop } from './components/desktop/desktop.component';
 import { Sidebar } from './components/sidebar/sidebar.component';
@@ -18,7 +19,8 @@ Aquí manejas el sidebarCollapsed, el enrutamiento (si lo agregas), y el estado 
   standalone: true,
   imports: [
     RouterOutlet,
-    CommonModule,
+    NgIf,
+    NgFor,
     Desktop,
     Sidebar,
     ContactsComponent,
@@ -32,13 +34,18 @@ Aquí manejas el sidebarCollapsed, el enrutamiento (si lo agregas), y el estado 
 
 export class App {
   sidebarCollapsed = false;
-  startMenuVisible = false;
+  showWindow = true; // Controla si se muestra la ventana
 
+
+  // Lista de ventanas activas
   windows: WindowData[] = [];
+
+  startMenuVisible: any;
 
   toggleSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
+
 
   closeWindow(id: number) {
     const win = this.windows.find(w => w.id === id);
@@ -66,6 +73,7 @@ export class App {
   }
 
   openApp(appName: string) {
+
     console.log('Abriendo app:', appName);
     let component: any;
     let title = '';
@@ -75,41 +83,25 @@ export class App {
         component = ContactsComponent;
         title = 'Contactos';
         break;
+      // Aquí puedes añadir más apps en el futuro
       default:
         return;
     }
 
-    // Verificar si ya existe
-    const existingWindow = this.windows.find(w => w.title === title);
-    if (existingWindow) {
-      existingWindow.visible = true;
-      existingWindow.minimized = false;
-      return;
-    }
-
-    // Si no existe, crear una nueva
     const newId = this.windows.length + 1;
+
     this.windows.push({
+      
       id: newId,
       title,
       contentComponent: component,
       visible: true,
       minimized: false
     });
-
     console.log('Ventanas:', this.windows);
+
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    const isStartMenu = target.closest('app-start-menu');
-    const isStartButton = target.closest('.start-button');
-
-    if (!isStartMenu && !isStartButton) {
-      this.startMenuVisible = false;
-    }
-  }
 
 }
 

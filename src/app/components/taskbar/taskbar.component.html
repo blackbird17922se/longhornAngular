@@ -1,11 +1,14 @@
 <div class="taskbar" [ngClass]="{ expanded: collapsed }">
 
   <!-- Sección izquierda: botón de inicio -->
-  <div class="taskbar-start" #startButton>
-    <!-- <button class="start-button" (click)="startMenuVisible = !startMenuVisible">Inicio</button> -->
+  <!-- <div class="taskbar-start" #startButton>
      <button class="start-button" (click)="toggleStartMenu()">Inicio</button>
     <app-start-menu *ngIf="startMenuVisible" />
-  </div>
+  </div> -->
+  <div class="taskbar-start">
+  <button #startButton class="start-button" (click)="toggleStartMenuClick()">Inicio</button>
+</div>
+
 
   <!-- Sección central: botones de ventanas minimizadas -->
   <div class="taskbar-windows">

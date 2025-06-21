@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
 
 
 /**
@@ -32,8 +32,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './window.component.html',
   styleUrl: './window.component.scss'
 })
-export class Window {
+export class WindowComponent implements AfterViewInit {
+
   @Input() title: string = 'Ventana'; // Título de la ventana, por defecto "Ventana"
+  @Input() contentComponent!: Type<any>; // Componente dinámico
   @Output() close = new EventEmitter(); // Evento que se emite al cerrar la ventana
   @Output() minimize = new EventEmitter<void>();
 
@@ -51,6 +53,29 @@ export class Window {
     width: '400px',
     height: 'auto'
   };
+
+  @ViewChild('contentContainer', { read: ViewContainerRef, static: true }) container!: ViewContainerRef;
+
+  // ngOnInit(): void {
+  //   console.log('WindowComponent inicializado');
+  //   this.container.clear();
+  //   if (this.contentComponent) {
+  //     console.log('Insertando componente dinámico:', this.contentComponent);
+  //     this.container.createComponent(this.contentComponent);
+  //   } else {
+  //     console.warn('NO HAY contentComponent');
+  //   }
+  // }
+
+  ngAfterViewInit() {
+        console.log('WindowComponent inicializado');
+  this.container.clear();
+  if (this.contentComponent) {
+    this.container.createComponent(this.contentComponent);
+  }
+}
+
+
 
   toggleMaximize(win: HTMLElement) {
     if (!this.maximized) {
@@ -74,25 +99,9 @@ export class Window {
       win.style.width = this.prevState.width;
       win.style.height = this.prevState.height;
     }
-
     this.maximized = !this.maximized;
 
   }
-
-  ngAfterViewInit() {
-    if (this.maximized) {
-      // Aquí puedes realizar acciones después de que la vista del componente se haya inicializado
-      // Por ejemplo, puedes establecer el tamaño inicial de la ventana
-      const win = document.querySelector('.window') as HTMLElement;
-      if (win) {
-        win.style.width = '100%'; // Ancho inicial de la ventana
-        win.style.height = '100%'; // Alto automático
-        win.style.top = '0'; // Posición inicial en Y
-        win.style.left = '0'; // Posición inicial en X
-      }
-    }
-  }
-
 
   // Cuando se empieza a arrastrar
   startDrag(event: MouseEvent) {

@@ -1,8 +1,9 @@
-// src/app/models/window.model.ts (opcional pero recomendado)
+import { Type } from '@angular/core';
+
 export interface WindowData {
   id: number;
   title: string;
-  content: string;
   visible: boolean;
   minimized: boolean;
+  contentComponent: any;
 }

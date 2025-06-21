@@ -1,54 +1,101 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Type } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 
+import { Desktop } from './components/desktop/desktop.component';
+import { Sidebar } from './components/sidebar/sidebar.component';
+import { TaskbarComponent } from './components/taskbar/taskbar.component';
+import { WindowComponent } from "./components/window/window.component";
+import { ContactsComponent } from './programs/contacts.component/contacts.component';
+import { StartMenuComponent } from './components/start-menu.component/start-menu.component';
+
+import { WindowData } from './models/window.model';
 
 @Component({
-  selector: 'app-window',
-
+  selector: 'app-root',
   standalone: true,
-  imports: [],
-  templateUrl: './window.component.html',
-  styleUrl: './window.component.scss'
+  imports: [
+    RouterOutlet,
+    NgIf,
+    NgFor,
+    Desktop,
+    Sidebar,
+    ContactsComponent,
+    TaskbarComponent,
+    WindowComponent,
+    StartMenuComponent
+  ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss'
 })
-export class Window {
-  @Input() title: string = 'Ventana'; // Título de la ventana, por defecto "Ventana"
-  @Output() close = new EventEmitter(); // Evento que se emite al cerrar la ventana
 
-  dragging: boolean = false; // Indica si la ventana está siendo arrastrada
-  offsetX: number = 0; // Desplazamiento en X al arrastrar
-  offsetY: number = 0; // Desplazamiento en Y al arrastrar
+export class App {
+  sidebarCollapsed = false;
+  showWindow = true; // Controla si se muestra la ventana
 
+  // Lista de ventanas activas
+  windows: WindowData[] = [];
 
-  // Cuando se empieza a arrastrar
-  startDrag(event: MouseEvent) {
-    this.dragging = true; // Inicia el arrastre
-    this.offsetX = event.clientX - event.clientX; // Calcula el desplazamiento en X
-    this.offsetY = event.clientY - event.clientY; // Calcula el desplazamiento en Y
+  startMenuVisible: any;
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
-  // Cuando se arrastra la ventana
-  onDrag(event: MouseEvent , win: HTMLElement) {
-    if (!this.dragging) return; // Si no está arrastrando, no hace nada
-    // Actualiza la posición de la ventana
-    const dx = event.clientX - this.offsetX; // Nueva posición en X
-    const dy = event.clientY - this.offsetY; // Nueva posición en Y
 
-    const newLeft = win.offsetLeft + dx; // Nueva posición izquierda
-    const newTop = win.offsetTop + dy; // Nueva posición superior
-
-    // Asegura que la ventana no se salga de la pantalla
-    const screenWidth = window.innerWidth; // Ancho de la pantalla
-
-    win.style.left = `${newLeft}px`; // Actualiza el estilo de la ventana
-    win.style.top = `${newTop}px`; // Actualiza el estilo de la ventana
-
-    // Resetea el desplazamiento
-    this.offsetX = event.clientX; // Actualiza el desplazamiento en X
-    this.offsetY = event.clientY; // Actualiza el desplazamiento en Y
-
-  }
-  // Cuando se suelta el ratón al arrastrar
-  stopDrag() {
-    this.dragging = false; // Detiene el arrastre
+  closeWindow(id: number) {
+    const win = this.windows.find(w => w.id === id);
+    if (win) win.visible = false;
   }
 
+  minimizeWindow(id: number) {
+    const win = this.windows.find(w => w.id === id);
+    if (win) {
+      win.minimized = true;
+      win.visible = false;
+    }
+  }
+
+  restoreWindow(id: number) {
+    const win = this.windows.find(w => w.id === id);
+    if (win) {
+      win.minimized = false;
+      win.visible = true;
+    }
+  }
+
+  get minimizedWindows(): WindowData[] {
+    return this.windows.filter(w => w.minimized);
+  }
+
+  openApp(appName: string) {
+
+    console.log('Abriendo app:', appName);
+    let component: any;
+    let title = '';
+
+    switch (appName) {
+      case 'contacts':
+        component = ContactsComponent;
+        title = 'Contactos';
+        break;
+      // Aquí puedes añadir más apps en el futuro
+      default:
+        return;
+    }
+
+    const newId = this.windows.length + 1;
+
+    this.windows.push({
+      
+      id: newId,
+      title,
+      contentComponent: component,
+      visible: true,
+      minimized: false
+    });
+    console.log('Ventanas:', this.windows);
+
+  }
 }

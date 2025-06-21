@@ -53,13 +53,11 @@
     </div>
     <!-- Fin Barra de título -->
 
-    <!-- Cuerpo de la ventana -->
     <div class="window-body">
-        <ng-content>
-            <!-- Aquí se inserta el contenido dinámico de la ventana -->
-            <!-- Puedes usar <ng-content> para proyectar contenido desde el componente padre -->
-        </ng-content>
+        <!-- Aquí se inserta el componente dinámico -->
+        <ng-template #contentContainer></ng-template>
     </div>
+
 
 </div>
 

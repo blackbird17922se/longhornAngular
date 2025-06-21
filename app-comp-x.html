@@ -1,0 +1,65 @@
+<app-desktop> <!-- Este es el contenedor padre del "escritorio". -->
+  <!-- Define el fondo del escritorio, un poco como el body de Windows.
+Contiene todo lo que ves: barra lateral, contenido dinámico, y barra de tareas.-->
+
+  <!-- barra lateral -->
+  <!-- Si sidebarCollapsed es true, se agrega la clase .collapsed al div -->
+  <div class="sidebar-wrapper" [class.collapsed]="sidebarCollapsed">
+
+    <!-- Este es tu componente de la barra lateral real:
+    Muestra íconos, accesos, menús, etc.
+    No necesita saber nada del estado collapsed, porque eso se maneja en el div padre.
+    Puedes poner animaciones, íconos dinámicos o links en este componente. -->
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <!-- contenido principal -->
+  <!-- Este es el espacio principal que representa:
+    El escritorio donde se abren ventanas.
+    También contiene la taskbar al fondo. -->
+  <div class="content-wrapper" [class.expanded]="sidebarCollapsed">
+    <ng-container *ngFor="let win of windows">
+
+      <app-window [title]="win.title" [contentComponent]="win.contentComponent" (close)="closeWindow(win.id)"
+        (minimize)="minimizeWindow(win.id)" [hidden]="!win.visible">
+      </app-window>
+
+
+      <!-- <app-window 
+        *ngIf="win.visible" 
+        [title]="win.title" 
+        [contentComponent]="win.contentComponent"
+        (close)="closeWindow(win.id)"
+        (minimize)="minimizeWindow(win.id)">
+      </app-window> -->
+
+    </ng-container>
+  </div>
+  <!-- barra de tareas -->
+  <!-- collapsed (Input): recibe si la barra lateral está colapsada, para ajustar su ancho: -->
+  <!-- toggleSidebar (Output): cuando el usuario hace clic en "min", emite un evento, que aquí está conectado con el método: -->
+  <!-- toggleSidebar() {
+          this.sidebarCollapsed = !this.sidebarCollapsed;
+        } -->
+  <app-taskbar [collapsed]="sidebarCollapsed" [minimizedWindows]="minimizedWindows" (toggleSidebar)="toggleSidebar()"
+    (restoreWindow)="restoreWindow($event)">
+
+    <<ng-container *ngFor="let win of windows">
+      <button *ngIf="win.minimized" (click)="restoreWindow(win.id)">
+        {{ win.title }}
+      </button>
+      </ng-container>
+
+  </app-taskbar>
+
+  
+  
+</app-desktop>
+<app-start-menu *ngIf="startMenuVisible" (launchApp)="openApp($event); startMenuVisible = false">
+</app-start-menu>
+
+<!-- Menú inicio, por fuera del escritorio pero en el root -->
+<!-- <app-start-menu
+  *ngIf="startMenuVisible"
+  (launchApp)="openApp($event); startMenuVisible = false">
+</app-start-menu> -->

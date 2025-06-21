@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,5 +10,11 @@ import { CommonModule } from '@angular/common';
 })
 export class StartMenuComponent {
 
+  @Output() launchApp = new EventEmitter<string>();
+
+  abrir(app: string) {
+    console.log('Click en:', app); // <-- nuevo log
+    this.launchApp.emit(app);
+  }
 
 }
