@@ -1,39 +1,35 @@
-/* Layout horizontal: sidebar + contenido */
-/* Layout horizontal real */
+// Barra lateral a la derecha.
 .sidebar-wrapper {
   position: absolute;
   top: 0;
-  bottom: 0; // ✅ Esto cambia
-}
-
-
-.sidebar-wrapper {
+  bottom: 0;
   right: 0;
   width: 200px;
   background-color: #2623ff;
-  transition: width 0.0s ease;
+  // transition: width 0.0s ease;
   // z-index: 2;
 
   &.collapsed {
     width: 0;
-    overflow: hidden;
+    overflow: hidden; // Oculta el contenido que sobresaldría del ancho 0. Es clave para esconder el contenido cuando la barra colapsa.
   }
 }
 
+//Zona de escritorio
 .content-wrapper {
-  left: 0px;
-  right: 60px;
-  background-color: red;
-  transition: left 0.0s ease;
-  width: calc(100vw - 200px);
-  height: 95%;
-    // position: absolute;
+  position: absolute;
   top: 0;
-  bottom: 0; // ✅ Esto cambia
+  // bottom: 0;
+  left: 0px;
+  right: 200px;
+  background-color: rgb(90, 90, 90);
+  transition: left 0.0s ease;
+  // width: calc(100vw - 200px);
+  height: 95%;
 
   &.expanded {
     right: 0;
-    width: 100vw;
+    // width: 100vw;
   }
 }
 

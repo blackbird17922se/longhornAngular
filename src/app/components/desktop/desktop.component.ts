@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-desktop',
   standalone: true,
   imports: [],
-  templateUrl: './desktop.html',
-  styleUrls: ['./desktop.scss']
+  templateUrl: './desktop.component.html',
+  styleUrls: ['./desktop.component.scss']
 })
 export class Desktop { }

@@ -1,0 +1,15 @@
+<app-desktop> <!-- Este es el contenedor padre del "escritorio". -->
+  <div class="sidebar-wrapper" [class.collapsed]="sidebarCollapsed">
+
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="content-wrapper" [class.expanded]="sidebarCollapsed">
+    <!-- <app-window *ngIf="showWindow" title="Mi Ventana" (close)="showWindow = false"> -->
+      <p>Este es el contenido de la ventana.</p>
+    </app-window>
+
+  </div>
+
+  <app-taskbar [collapsed]="sidebarCollapsed" (toggleSidebar)="toggleSidebar()"></app-taskbar>
+</app-desktop>

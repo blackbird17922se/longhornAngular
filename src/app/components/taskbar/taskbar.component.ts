@@ -5,8 +5,8 @@ import { NgClass } from '@angular/common'; // ✅ este es el que te falta
 @Component({
   selector: 'app-taskbar',
   standalone: true,
-  templateUrl: './taskbar.html',
-  styleUrls: ['./taskbar.scss'],
+  templateUrl: './taskbar.component.html',
+  styleUrls: ['./taskbar.component.scss'],
     imports: [NgClass] // ✅ aquí lo agregas
 })
 export class Taskbar {
