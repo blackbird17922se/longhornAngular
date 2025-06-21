@@ -2,14 +2,56 @@
 
     <!-- Barra de título -->
     <div class="window-header" (mousedown)="startDrag($event)">
-        <span class="window-title">{{ title }}</span>
-        <div class="window-actions">
-            <button (click)="toggleMaximize(win)">
-                {{ maximized ? '🗗' : '🗖' }}
-            </button>
-            <button (click)="close.emit()">✖</button>
+
+        <!-- Primera fila: Botones de ventana (cerrar, minimizar, etc.) -->
+        <div class="header-top">
+            <div class="window-actions">
+                <button>−</button>
+                <button (click)="toggleMaximize(win)">
+                    {{ maximized ? '🗗' : '🗖' }}
+                </button>
+                <button (click)="close.emit()">✖</button>
+            </div>
         </div>
+
+        <!-- Segunda fila: Navegación -->
+        <div class="header-bottom">
+
+            <!-- Columna 1: Botones adelante / atrás -->
+            <div class="nav-buttons">
+                <button>⬅</button>
+                <button>➡</button>
+            </div>
+
+            <!-- Columna 2: Título + barra de navegación -->
+            <div class="nav-center">
+
+                <div class="title">
+                    <span class="window-title">{{ title }}</span>
+                </div>
+
+                <div class="address-bar">
+                    <input type="text" name="" id="" placeholder="https://www.ejemplo.com">
+                    <button class="breadcrumb-toggle-btn" id="toggle-dir-dropdown">
+                        ▼
+                        <!-- <img class="node-arrow" src="./icons/btn/caret-down-solid.svg" alt="Abrir"> -->
+                    </button>
+                </div>
+            </div>
+            <!-- Fin Columna 2 -->
+
+            <!-- Columna 3: Iconos de favoritos -->
+            <div class="favorites">
+                <button>📁</button>
+                <button>🔍</button>
+                <button>⭐</button>
+            </div>
+
+        </div>
+        <!-- Fin Segunda Fila -->
+
     </div>
+    <!-- Fin Barra de título -->
 
     <!-- Cuerpo de la ventana -->
     <div class="window-body">
