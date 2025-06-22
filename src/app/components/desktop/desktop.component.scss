@@ -3,7 +3,9 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: #00e1ff;
+  // background-color: #00e1ff;
+  background: url("/assets/wallpapers/default.jpg") no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
 }

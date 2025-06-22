@@ -1,19 +1,32 @@
+:root {
+  --speed: 4s;
+  --aero-color: #00000096;
+  --aero-transp-nv: blur(2px);
+}
+
 .taskbar {
   position: absolute;
   bottom: 0;
   left: 0;
   height: 5%;
   width: calc(100vw - 200px);
-  background-color: #929292;
+  background-color: #ababab96;
+  backdrop-filter: var(--aero-transp-nv);
   display: grid;
-  grid-template-columns: 10% 1fr 20%;
+  grid-template-columns: auto 1fr 20%;
   align-items: center;
-  padding: 0 10px;
+  padding: 0;
+  box-shadow: -2px 2px 5px #303030;
 
   &.expanded {
     width: 100vw;
     // overflow: hidden;
   }
+}
+
+.taskbar-start{
+  // background-color: #161414;
+  // margin-right: 10px;
 }
 
 .taskbar-start,
@@ -25,21 +38,106 @@
 
 .taskbar-windows {
   justify-content: flex-start;
+  // background-color: #0fe600;
   gap: 2px;
+  padding-left: 13px;
 }
 
-.taskbar-system{
+.taskbar-system {
   justify-content: flex-end;
   gap: 10px;
+  // background: #243a28;
 }
 
 
 .sidebar-button {
-  background-color: #444;
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
   font-size: 16px;
   cursor: pointer;
+  background: url('/assets/icons/taskbar/min-sd-dw.png') no-repeat center;
+  background-size: contain;
+  width: 23px;
+  height: 23px;
+  margin-right: 8px;
+}
+
+.sidebar-button:hover {
+  background-image: url('/assets/icons/taskbar/min-sd-dw-hover.png');
+}
+
+.sidebar-button.collapsed {
+  background-image: url('/assets/icons/taskbar/min-sd-up.png');
+}
+
+.sidebar-button.collapsed:hover {
+  background-image: url('/assets/icons/taskbar/min-sd-up.png');
+}
+
+
+/*************************** BOTON START **************************/
+.start-button {
+  height: 38px;
+  width: 90px;
+  background: linear-gradient(to top, #222222f5, #cdcdcd94);
+  border: 1px solid #6c6c6c;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.4),
+    /* Brillo interno arriba */
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    /* Sombra interna abajo */
+    0 1px 3px rgba(0, 0, 0, 0.4);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    // background: linear-gradient(to top, #808080, #e0e0e0);
+    background: linear-gradient(to top, #233b20, #4e7c56);
+
+    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.4),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.5),
+      0 3px 6px rgba(0, 0, 0, 0.6);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background: linear-gradient(to top, #121f11, #243a28);
+  }
+}
+
+
+/*************************** APPS EN LA TASKBAR **************************/
+.taskbar-item {
+    display: flex;
+    align-items: center;
+    width: 103px;
+    height: 36px;
+    background: linear-gradient(to top, rgb(116 116 116 / 0%), rgb(225 223 223 / 85%));
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid #b1b1b1;
+    color: #0206b1;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
+  }
+
+}
+
+/* taskbar.component.scss */
+.taskbar-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: middle;
 }

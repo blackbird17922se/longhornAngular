@@ -6,21 +6,27 @@
     <app-start-menu *ngIf="startMenuVisible" />
   </div> -->
   <div class="taskbar-start">
-  <button #startButton class="start-button" (click)="toggleStartMenuClick()">Inicio</button>
-</div>
+    <button #startButton class="start-button" (click)="toggleStartMenuClick()">
+      <!-- <img src="assets/icons/taskbar/start-btn.png" alt="Inicio" width="24" height="24"> -->
+      <img src="/assets/icons/taskbar/start-btn.png" alt="Inicio" width="24" height="24">
+
+    </button>
+  </div>
 
 
   <!-- Sección central: botones de ventanas minimizadas -->
   <div class="taskbar-windows">
     <button *ngFor="let win of minimizedWindows" (click)="restoreWindow.emit(win.id)" class="taskbar-item">
+      <img [src]="win.icon" alt="icon" class="taskbar-icon" />
       {{ win.title }}
     </button>
   </div>
 
   <!-- Sección derecha: íconos del sistema (a futuro) -->
   <div class="taskbar-system">
-    <button class="sidebar-button" (click)="onToggleSidebar()">≡</button>
-    🕓 📶 🔋
+    <button class="sidebar-button" (click)="onToggleSidebar()" [class.collapsed]="collapsed"></button>
+    <!-- 🕓 📶 🔋 -->
   </div>
+
 
 </div>

@@ -10,7 +10,9 @@ import { CommonModule } from '@angular/common';
 })
 export class TaskbarComponent {
   @Input() collapsed = false;
-  @Input() minimizedWindows: { id: number; title: string }[] = [];
+  @Input() minimizedWindows: {
+icon: any; id: number; title: string 
+}[] = [];
 
   @Output() toggleSidebar = new EventEmitter<void>();
   @Output() restoreWindow = new EventEmitter<number>();

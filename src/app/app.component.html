@@ -11,7 +11,8 @@
     </ng-container>
   </div>
 
-  <app-taskbar [collapsed]="sidebarCollapsed" [minimizedWindows]="minimizedWindows" (toggleSidebar)="toggleSidebar()"
+  <!-- <app-taskbar [collapsed]="sidebarCollapsed" [minimizedWindows]="minimizedWindows" (toggleSidebar)="toggleSidebar()" -->
+  <app-taskbar [collapsed]="sidebarCollapsed" [minimizedWindows]="taskbarWindows" (toggleSidebar)="toggleSidebar()"
     (restoreWindow)="restoreWindow($event)" (toggleStartMenu)="startMenuVisible = !startMenuVisible">
   </app-taskbar>
 </app-desktop>

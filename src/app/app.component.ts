@@ -61,19 +61,25 @@ export class App {
     }
   }
 
-  get minimizedWindows(): WindowData[] {
-    return this.windows.filter(w => w.minimized);
+  // get minimizedWindows(): WindowData[] {
+  //   return this.windows.filter(w => w.minimized);
+  // }
+  get taskbarWindows(): WindowData[] {
+    return this.windows.filter(w => w.visible || w.minimized);
   }
+
 
   openApp(appName: string) {
     console.log('Abriendo app:', appName);
     let component: any;
     let title = '';
+    let icon = '';
 
     switch (appName) {
       case 'contacts':
         component = ContactsComponent;
         title = 'Contactos';
+        icon = '/assets/icons/apps/contacts/contact-tk.png'; // Asegúrate de tener un icono definido
         break;
       default:
         return;
@@ -94,7 +100,8 @@ export class App {
       title,
       contentComponent: component,
       visible: true,
-      minimized: false
+      minimized: false,
+      icon: icon
     });
 
     console.log('Ventanas:', this.windows);

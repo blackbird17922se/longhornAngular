@@ -6,4 +6,5 @@ export interface WindowData {
   visible: boolean;
   minimized: boolean;
   contentComponent: any;
+  icon: string;
 }
