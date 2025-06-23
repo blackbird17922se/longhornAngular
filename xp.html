@@ -1,31 +1,56 @@
-<app-desktop>
 
-  <div class="sidebar-wrapper" [class.collapsed]="sidebarCollapsed">
+                <div class="address-bar" (click)="handleAddressClick($event)">
 
-    <app-sidebar></app-sidebar>
-  </div>
+                    <!-- <span class='selected hv' id="cajadir"></span> -->
+                    <div class="breadcrumb-node" id="node-pc">
+                        <span class="node-label">Mi PC</span>
+                        <img class="node-arrow" src="/assets/icons/btn/caret-right-solid-w.svg" alt="Abrir">
 
-  <div class="content-wrapper" [class.expanded]="sidebarCollapsed">
-    <ng-container *ngFor="let win of windows">
+                        <!-- Dropdown al hacer clic -->
+                        <div class="breadcrumb-dropdown">
+                            <ul>
+                                <li><a href="#"> <img src="./icons/location-icon-sm/desktop.png" alt=""> Desktop</a>
+                                </li>
+                                <li><a href="#"> <img src="./icons/location-icon-sm/document-open.png"
+                                            alt="">Documents</a></li>
+                                <li><a href="#"> <img src="./icons/location-icon-sm/computer.png" alt="">Computer</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
 
-      <app-window [title]="win.title" [contentComponent]="win.contentComponent" (close)="closeWindow(win.id)"
-        (minimize)="minimizeWindow(win.id)" [hidden]="!win.visible">
-      </app-window>
+                    <div class="breadcrumb-node" id="node-contactos">
+                        <span class="node-label">Contactos</span>
+                        <img class="node-arrow" src="/assets/icons/btn/caret-right-solid-w.svg" alt="Abrir">
 
-    </ng-container>
-  </div>
+                        <!-- Dropdown de contactos (si aplica) -->
+                        <div class="breadcrumb-dropdown">
+                            <ul>
+                                <li><a href="#">Documentos</a></li>
+                                <li><a href="#">Música</a></li>
+                                <li><a href="#">Imágenes</a></li>
+                                <li><a href="#"><b>Contactos</b></a></li>
+                                <li><a href="#">Videos</a></li>
+                                <li><a href="#">Mi PC</a></li>
+                            </ul>
+                        </div>
+                    </div>
 
-  <app-taskbar [collapsed]="sidebarCollapsed" [minimizedWindows]="minimizedWindows" (toggleSidebar)="toggleSidebar()"
-    (restoreWindow)="restoreWindow($event)">
+                    <!-- Este contenedor agrupa el botón y el dropdown -->
+                    <div class="breadcrumb-btn-list">
+                        <button class="breadcrumb-toggle-btn" id="toggle-dir-dropdown">
+                            <img class="node-arrow" src="/assets/icons/btn/caret-down-solid.svg" alt="Abrir">
+                        </button>
 
-    <<ng-container *ngFor="let win of windows">
-      <button *ngIf="win.minimized" (click)="restoreWindow(win.id)">
-        {{ win.title }}
-      </button>
-      </ng-container>
-
-  </app-taskbar>
-
-</app-desktop>
-<app-start-menu *ngIf="startMenuVisible" (launchApp)="openApp($event); startMenuVisible = false">
-</app-start-menu>
+                        <div class="breadcrumb-dropdown-dir">
+                            <ul>
+                                <li><a href="#">Docdddddumentos</a></li>
+                                <li><a href="#">Música</a></li>
+                                <li><a href="#">Imágenes</a></li>
+                                <li><a href="#"><b>Contactos</b></a></li>
+                                <li><a href="#">Videos</a></li>
+                                <li><a href="#">Mi PC</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>

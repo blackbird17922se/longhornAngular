@@ -33,22 +33,22 @@
 
                 <div class="address-bar" (click)="handleAddressClick($event)">
 
+
                     <!-- para los breadcum y el input -->
                     <div class="address-bar-s1">
                         <ng-container *ngIf="!isEditingAddress; else editingMode">
                             <!-- Breadcrumb visible -->
                             <div class="breadcrumb-node" id="node-pc">
                                 <span class="node-label">Mi PC</span>
-                                <img class="node-arrow" src="/assets/icons/btn/caret-right-solid-w.svg" alt="Abrir">
+                                <img class="node-arrow" src="./icons/btn/caret-right-solid-w.svg" alt="Abrir">
                                 <div class="breadcrumb-dropdown">
                                     <ul>
-                                        <li><a href="#"> <img src="/assets/icons/location-icon-sm/desktop.png" alt="">
+                                        <li><a href="#"> <img src="./icons/location-icon-sm/desktop.png" alt="">
                                                 Desktop</a>
                                         </li>
-                                        <li><a href="#"> <img src="/assets/icons/location-icon-sm/document-open.png"
+                                        <li><a href="#"> <img src="./icons/location-icon-sm/document-open.png"
                                                     alt="">Documents</a></li>
-                                        <li><a href="#"> 
-                                            <img src="/assets/icons/location-icon-sm/computer.png"
+                                        <li><a href="#"> <img src="./icons/location-icon-sm/computer.png"
                                                     alt="">Computer</a>
                                         </li>
                                     </ul>
@@ -57,7 +57,7 @@
 
                             <div class="breadcrumb-node" id="node-contactos">
                                 <span class="node-label">Contactos</span>
-                                <img class="node-arrow" src="/assets/icons/btn/caret-right-solid-w.svg" alt="Abrir">
+                                <img class="node-arrow" src="./icons/btn/caret-right-solid-w.svg" alt="Abrir">
                                 <div class="breadcrumb-dropdown">
                                     <ul>
                                         <li><a href="#">Documentos</a></li>
@@ -70,7 +70,22 @@
                                 </div>
                             </div>
 
+                            <div class="breadcrumb-btn-list">
+                                <button class="breadcrumb-toggle-btn" id="toggle-dir-dropdown">
+                                    <img class="node-arrow" src="/assets/icons/btn/caret-down-solid.svg" alt="Abrir">
+                                </button>
 
+                                <div class="breadcrumb-dropdown-dir">
+                                    <ul>
+                                        <li><a href="#">Docdddddumentos</a></li>
+                                        <li><a href="#">Música</a></li>
+                                        <li><a href="#">Imágenes</a></li>
+                                        <li><a href="#"><b>Contactos</b></a></li>
+                                        <li><a href="#">Videos</a></li>
+                                        <li><a href="#">Mi PC</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </ng-container>
 
                         <!-- Editable input -->
@@ -83,25 +98,6 @@
                         </ng-template>
 
                     </div>
-
-  
-                        <div class="breadcrumb-btn-list">
-                            <button class="breadcrumb-toggle-btn" id="toggle-dir-dropdown">
-                                <img class="node-arrow" src="/assets/icons/btn/caret-down-solid.svg" alt="Abrir">
-                            </button>
-
-                            <div class="breadcrumb-dropdown-dir">
-                                <ul>
-                                    <li><a href="#">Docdddddumentos</a></li>
-                                    <li><a href="#">Música</a></li>
-                                    <li><a href="#">Imágenes</a></li>
-                                    <li><a href="#"><b>Contactos</b></a></li>
-                                    <li><a href="#">Videos</a></li>
-                                    <li><a href="#">Mi PC</a></li>
-                                </ul>
-                            </div>
-                        </div>
-       
 
 
                 </div>

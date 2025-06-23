@@ -1,5 +1,17 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
-
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  Type,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HostListener } from '@angular/core';
 
 /**
  * Componente de ventana que representa una ventana en el escritorio.
@@ -14,37 +26,40 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, Type, ViewChild,
  * 
  * @example
  * <app-window></app-window>
- */
-
+*/
 @Component({
   selector: 'app-window',
-  /* "standalone" = indica que este componente no es parte de un módulo, sino que se puede usar directamente.
-    * En Angular 16 y versiones posteriores, puedes crear componentes independientes sin necesidad de módulos.
-    * 
-    * Cuando un componente en Angular tiene standalone: true, significa que no necesita estar declarado en un 
-    * NgModule para funcionar.
-    * Con esto, puedes usar este componente en cualquier otro que también sea standalone, sin necesidad de módulos
-    */
   standalone: true,
-  // "imports" = lista de otros componentes, directivas o pipes que este componente necesita.
-  imports: [],
-  // "templateUrl" = ruta al archivo HTML que define la plantilla de este componente.
+  imports: [CommonModule, FormsModule],
   templateUrl: './window.component.html',
   styleUrl: './window.component.scss'
 })
-export class WindowComponent implements AfterViewInit {
+export class WindowComponent implements AfterViewInit, OnDestroy {
 
   @Input() title: string = 'Ventana'; // Título de la ventana, por defecto "Ventana"
   @Input() contentComponent!: Type<any>; // Componente dinámico
   @Output() close = new EventEmitter(); // Evento que se emite al cerrar la ventana
   @Output() minimize = new EventEmitter<void>();
 
+  @ViewChild('contentContainer', { read: ViewContainerRef, static: true }) container!: ViewContainerRef;
 
   dragging: boolean = false; // Indica si la ventana está siendo arrastrada
   offsetX: number = 0; // Desplazamiento en X al arrastrar
   offsetY: number = 0; // Desplazamiento en Y al arrastrar
+  maximized: boolean = true; // 👈 Estado de maximización
 
-  maximized = true; // 👈 Estado de maximización
+  isEditingAddress = false;
+  dropdownIndex: number | null = null;
+  showFullDropdown = false;
+  hovered: number | null = null;
+
+  breadcrumbPath = [
+    { label: 'Mi PC', dropdown: ['Desktop', 'Documentos', 'Descargas'] },
+    { label: 'Contactos', dropdown: ['Documentos', 'Música', 'Videos'] }
+  ];
+
+  allLocations = ['Mi PC', 'Documentos', 'Música', 'Videos', 'Imágenes', 'Descargas'];
+  editablePath = 'C:/Contactos';
 
   // NUEVO: guarda posición y tamaño antes de maximizar
   private prevState = {
@@ -54,29 +69,139 @@ export class WindowComponent implements AfterViewInit {
     height: 'auto'
   };
 
-  @ViewChild('contentContainer', { read: ViewContainerRef, static: true }) container!: ViewContainerRef;
-
-  // ngOnInit(): void {
-  //   console.log('WindowComponent inicializado');
-  //   this.container.clear();
-  //   if (this.contentComponent) {
-  //     console.log('Insertando componente dinámico:', this.contentComponent);
-  //     this.container.createComponent(this.contentComponent);
-  //   } else {
-  //     console.warn('NO HAY contentComponent');
-  //   }
-  // }
 
   ngAfterViewInit() {
-        console.log('WindowComponent inicializado');
-  this.container.clear();
-  if (this.contentComponent) {
-    this.container.createComponent(this.contentComponent);
+    console.log('WindowComponent inicializado');
+
+    // Carga el componente dinámico
+    this.container.clear();
+    if (this.contentComponent) {
+      this.container.createComponent(this.contentComponent);
+    }
+
+    // Inicializa el breadcrumb y sus eventos
+    this.inicializarbreadcrumb();
   }
-}
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.handleOutsideClick);
+  }
+
+  /** Maneja el clic en el área de dirección */
+  handleAddressClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    // Si se hizo clic dentro de un breadcrumb-node, no hacer nada
+    if (target.closest('.breadcrumb-node') || target.closest('.breadcrumb-toggle-btn')) return;
+
+    console.log('Se hizo clic en address-bar fuera de breadcrumb-nodes');
+    this.isEditingAddress = true;
+    this.inicializarbreadcrumb();
+  }
+  applyPath() {
+    this.isEditingAddress = false;
+    console.log('Ruta ingresada:', this.editablePath);
+    // Aquí puedes regenerar breadcrumbPath si quieres
+    this.inicializarbreadcrumb();
+  }
+
+   /** Cierra edición si se hace clic fuera del address-bar */
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const addressBar = document.querySelector('.address-bar');
+
+    // ⚠️ Si se hace clic dentro de la dropdown general o botón, no hagas nada
+    const clickedToggleBtn = target.closest('#toggle-dir-dropdown');
+    const clickedDropdownDir = target.closest('.breadcrumb-dropdown-dir');
+
+    if (clickedToggleBtn || clickedDropdownDir) return;
+
+    if (this.isEditingAddress && addressBar && !addressBar.contains(target)) {
+      this.isEditingAddress = false;
+      console.log('ya no es edición');
+    }
+
+    this.inicializarbreadcrumb(); // Siempre reengancha
+  }
 
 
 
+  /************************ PARA BREADCUM ******************* */
+  inicializarbreadcrumb() {
+    console.log('Inicializando breadcrumb');
+
+    setTimeout(() => {
+      // 1. Limpia y vuelve a agregar eventos a cada arrow
+      document.querySelectorAll('.node-arrow').forEach(arrow => {
+        const newArrow = arrow.cloneNode(true) as HTMLElement;
+        arrow.replaceWith(newArrow);
+      });
+
+      // 2. Reagrega la lógica de abrir/cerrar dropdowns por nodo
+      document.querySelectorAll('.node-arrow').forEach(arrow => {
+        arrow.addEventListener('click', (e: any) => {
+          e.stopPropagation();
+          const node = e.target.closest('.breadcrumb-node') as HTMLElement;
+          const dropdown = node?.querySelector('.breadcrumb-dropdown') as HTMLElement;
+
+          const allDropdowns = document.querySelectorAll('.breadcrumb-dropdown');
+          allDropdowns.forEach(d => {
+            if (d !== dropdown) (d as HTMLElement).style.display = 'none';
+          });
+
+          if (dropdown) {
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+          }
+        });
+      });
+
+      // 3. Botón ▼ lateral (dropdown-dir)
+      const oldToggleBtn = document.getElementById('toggle-dir-dropdown');
+      if (oldToggleBtn) {
+        const newToggleBtn = oldToggleBtn.cloneNode(true) as HTMLElement;
+        oldToggleBtn.replaceWith(newToggleBtn);
+
+        const dropdown = document.querySelector('.breadcrumb-dropdown-dir') as HTMLElement;
+        const addressB = document.querySelector('.address-bar') as HTMLElement;
+
+        if (dropdown && addressB) {
+          newToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdown.style.display === 'block';
+            dropdown.style.display = isOpen ? 'none' : 'block';
+            addressB.classList.toggle('open', !isOpen);
+          });
+        }
+      }
+
+      // 4. Manejo de clics por fuera para cerrar todo
+      document.removeEventListener('click', this.handleOutsideClick);
+      document.addEventListener('click', this.handleOutsideClick);
+
+    }, 0);
+  }
+
+  handleOutsideClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+
+    // Cierra todos los dropdowns breadcrumb-node
+    document.querySelectorAll('.breadcrumb-dropdown').forEach(drop => {
+      (drop as HTMLElement).style.display = 'none';
+    });
+
+    // Cierra dropdown-dir si está abierto
+    const dropdownDir = document.querySelector('.breadcrumb-dropdown-dir') as HTMLElement;
+    const addressB = document.querySelector('.address-bar') as HTMLElement;
+    if (dropdownDir && addressB) {
+      dropdownDir.style.display = 'none';
+      addressB.classList.remove('open');
+    }
+  };
+
+
+  /*************************** EVENTOS DE LA VENTANA: MINIMIZAR, RESTAURAR, MOVER, CERRAR ********************/
+  // Cambia entre maximizado/restaurado
   toggleMaximize(win: HTMLElement) {
     if (!this.maximized) {
       // Guarda estado actual antes de maximizar
@@ -100,7 +225,6 @@ export class WindowComponent implements AfterViewInit {
       win.style.height = this.prevState.height;
     }
     this.maximized = !this.maximized;
-
   }
 
   // Cuando se empieza a arrastrar
@@ -112,25 +236,23 @@ export class WindowComponent implements AfterViewInit {
 
   // Cuando se arrastra la ventana
   onDrag(event: MouseEvent, win: HTMLElement) {
-    if (!this.dragging) return; // Si no está arrastrando, no hace nada
-    // Actualiza la posición de la ventana
-    const dx = event.clientX - this.offsetX; // Nueva posición en X
-    const dy = event.clientY - this.offsetY; // Nueva posición en Y
+    if (!this.dragging) return;
 
-    const newLeft = win.offsetLeft + dx; // Nueva posición izquierda
-    const newTop = win.offsetTop + dy; // Nueva posición superior
+    // Calcula nueva posición
+    const dx = event.clientX - this.offsetX;
+    const dy = event.clientY - this.offsetY;
 
-    // Asegura que la ventana no se salga de la pantalla
-    const screenWidth = window.innerWidth; // Ancho de la pantalla
+    const newLeft = win.offsetLeft + dx;
+    const newTop = win.offsetTop + dy;
 
-    win.style.left = `${newLeft}px`; // Actualiza el estilo de la ventana
-    win.style.top = `${newTop}px`; // Actualiza el estilo de la ventana
+    win.style.left = `${newLeft}px`;
+    win.style.top = `${newTop}px`;
 
-    // Resetea el desplazamiento
-    this.offsetX = event.clientX; // Actualiza el desplazamiento en X
-    this.offsetY = event.clientY; // Actualiza el desplazamiento en Y
-
+    // Actualiza el desplazamiento
+    this.offsetX = event.clientX;
+    this.offsetY = event.clientY;
   }
+
   // Cuando se suelta el ratón al arrastrar
   stopDrag() {
     this.dragging = false; // Detiene el arrastre

@@ -27,7 +27,7 @@ Aquí manejas el sidebarCollapsed, el enrutamiento (si lo agregas), y el estado 
     StartMenuComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss', './components/window/window.component.scss']
 })
 
 export class App {

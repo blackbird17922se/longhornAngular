@@ -70,10 +70,9 @@
 }
 
 // Columna 2: Título + barra de navegación
-.nav-center[_ngcontent-ng-c883319084] {
+.nav-center {
   display: grid;
   grid-template-rows: 40% 60%;
-  // background-color: cadetblue;
   gap: 2px;
   padding: 0;
 }
@@ -84,34 +83,218 @@
   color: #f1f1f1;
 }
 
+
+/******************************** BARRA DE DIRECCIONES ********************/
 .address-bar {
   display: flex;
   align-items: center;
+  position: relative;
+  width: 100%;
+  padding: 1px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  border: 1.4px solid transparent;
+  border-radius: 2px;
+  text-indent: 10px;
+  height: 20px;
 
-  input {
-    flex: 1; // forma abreviada en Flexbox para hacer que un elemento crezca y ocupe todo el espacio disponible dentro del contenedor flexible.
-    padding: 5px;
-    border: none;
-    // border-radius: 4px;
-    background-color: #f0f0f0;
-    // font-size: 14px;
-  }
-
-  button {
-    background: #ffffff;
-    color: rgb(12, 12, 12);
-    border: none;
-    padding: 4px 8px;
-    border-radius: 0 2px 2px 0;
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: var(--aero-transp-nv);
+    border-color: #969696;
     cursor: pointer;
 
-    &:hover {
-      background: #666;
-    }
+  }
 
+  &.open .breadcrumb-toggle-btn {
+    display: block;
+  }
+
+  &:hover .breadcrumb-toggle-btn {
+    display: block;
   }
 }
 
+.address-bar-s1 {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  padding: 1px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  border: 1.4px solid transparent;
+  border-radius: 2px;
+  text-indent: 10px;
+  height: 20px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: var(--aero-transp-nv);
+    border-color: #969696;
+    cursor: pointer;
+
+  }
+
+  &.open .breadcrumb-toggle-btn {
+    display: block;
+  }
+
+  &:hover .breadcrumb-toggle-btn {
+    display: block;
+  }
+}
+
+.address-bar.editing {
+  background: white;
+  border: 1px solid #999;
+}
+
+.address-edit-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 4px;
+}
+
+.address-input {
+  flex: 1;
+  font-size: 12px;
+  padding: 2px 6px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+
+.breadcrumb-btn-list {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  position: relative;
+}
+
+.breadcrumb-toggle-btn {
+  display: none;
+  padding: 0;
+  margin: 0;
+  height: 16px;
+  width: 16px;
+  background: linear-gradient(180deg, #ffffff 27%, #c8c6d8 62%);
+  border: 1.5px solid #ffffff;
+
+  &:hover {
+    background: linear-gradient(180deg, #fdfdfd 27%, #bcf3ff 62%);
+  }
+
+  &:active {
+    background: linear-gradient(0deg, #ffffff 27%, #a8a7ba 62%);
+    color: #000;
+  }
+
+  img {
+    pointer-events: none;
+    // height: 16px;
+    // width: 16px;
+  }
+}
+
+.address-bar:hover .breadcrumb-toggle-btn,
+.address-bar.open .breadcrumb-toggle-btn {
+  display: block;
+}
+
+
+/* Estilos comunes para dropdowns */
+.breadcrumb-dropdown,
+.breadcrumb-dropdown-dir {
+  position: absolute;
+  top: 100%;
+  background: #f0f0f0f7;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 6px;
+  border-radius: 0;
+  display: none;
+  z-index: 10;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 4px 12px;
+      border: 1px solid transparent;
+
+      &:hover {
+        background-color: #b6f5ff;
+        border-color: #8defff;
+        border-radius: 3px;
+      }
+
+      a {
+        color: #000783;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+/* Ancho específico solo para el dropdown-dir */
+.breadcrumb-dropdown-dir {
+  right: 0;
+  width: 856px;
+}
+
+/* Nodo breadcrumb */
+.breadcrumb-node {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 0;
+
+  &:hover {
+    cursor: pointer;
+    background: linear-gradient(0deg, #666 0%, #999 100%);
+    border-color: #999;
+    border-radius: 2px;
+
+    span {
+      border-right: 1px solid #999;
+    }
+
+    .node-arrow {
+      display: inline;
+      transform: rotate(90deg);
+    }
+  }
+
+  &:active {
+    background: linear-gradient(180deg, #313131 0%, #494949 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.node-label {
+  color: #fff;
+  padding-right: 6px;
+}
+
+.node-arrow {
+  width: 14px;
+  height: 14px;
+  padding: 2px;
+  border-radius: 4px;
+  // display: none;
+}
+
+/* Caso especial: mostrar flecha solo al hacer hover */
+#node-contactos:hover .node-arrow {
+  display: block;
+}
+
+
+/////////////////////////////////
 .favorites {
   display: flex;
   justify-content: flex-end;

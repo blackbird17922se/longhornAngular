@@ -1,0 +1,117 @@
+<div class="window" #win (mousemove)="onDrag($event, win)" (mouseup)="stopDrag()" (mouseleave)="stopDrag()">
+
+    <!-- Barra de título -->
+    <div class="window-header" (mousedown)="startDrag($event)">
+
+        <!-- Primera fila: Botones de ventana (cerrar, minimizar, etc.) -->
+        <div class="header-top">
+            <div class="window-actions">
+                <button (click)="minimize.emit()">−</button>
+                <button (click)="toggleMaximize(win)">
+                    {{ maximized ? '🗗' : '🗖' }}
+                </button>
+                <button (click)="close.emit()">✖</button>
+            </div>
+        </div>
+
+        <!-- Segunda fila: Navegación -->
+        <div class="header-bottom">
+
+            <!-- Columna 1: Botones adelante / atrás -->
+            <div class="nav-buttons">
+                <button>⬅</button>
+                <button>➡</button>
+            </div>
+
+            <!-- Columna 2: Título + barra de navegación -->
+            <!-- Barra de navegación -->
+            <div class="nav-center">
+
+                <!-- Título -->
+                <div class="title">
+                    <span class="window-title">{{ title }}</span>
+                </div>
+
+                <!-- Direccionador -->
+                <div class="address-bar" *ngIf="!isEditingAddress" (clickOutside)="isEditingAddress = true">
+                    <ng-container *ngFor="let node of breadcrumbPath; let i = index">
+                        <div class="breadcrumb-node" (mouseenter)="hovered = i" (mouseleave)="hovered = null">
+                            <span class="node-label">{{ node.label }}</span>
+
+                            <img *ngIf="node.dropdown" class="node-arrow" src="/icons/btn/caret-right-solid-w.svg"
+                                (click)="toggleDropdown(i, $event)" />
+
+                            <!-- Dropdown -->
+                            <div *ngIf="dropdownIndex === i" class="breadcrumb-dropdown">
+                                <ul>
+                                    <li *ngFor="let item of node.dropdown">
+                                        <a href="#" (click)="navigateTo(item)">{{ item }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <span *ngIf="i < breadcrumbPath.length - 1">&nbsp;>&nbsp;</span>
+                    </ng-container>
+
+                    <!-- Botón final -->
+                    <button class="breadcrumb-toggle-btn" (click)="toggleFullDropdown($event)">
+                        ▼
+                    </button>
+
+                    <div *ngIf="showFullDropdown" class="breadcrumb-dropdown-dir">
+                        <ul>
+                            <li *ngFor="let item of allLocations"><a href="#">{{ item }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Modo edición -->
+                <div class="address-bar" *ngIf="isEditingAddress">
+                    <input type="text" [(ngModel)]="editablePath" (blur)="isEditingAddress = false"
+                        (keydown.enter)="applyPath()" />
+                    <button (click)="isEditingAddress = false">🔄</button>
+                </div>
+            </div>
+
+            <!-- Fin Columna 2 -->
+
+            <!-- Columna 3: Iconos de favoritos -->
+            <div class="favorites">
+                <button>📁</button>
+                <button>🔍</button>
+                <button>⭐</button>
+            </div>
+
+        </div>
+        <!-- Fin Segunda Fila -->
+
+    </div>
+    <!-- Fin Barra de título -->
+
+    <div class="window-body">
+        <!-- Aquí se inserta el componente dinámico -->
+        <ng-template #contentContainer></ng-template>
+    </div>
+
+
+</div>
+
+
+<!-- #win es una template reference variable.
+👉 Le da un nombre (win) al elemento HTML <div class="window"> para que lo puedas usar dentro del componente.
+📌 Es como decir:
+“Este div se va a llamar win dentro del HTML, y lo puedo pasar como argumento a funciones”. 
+
+¿Por qué pasar win como argumento?
+Porque dentro de la función onDrag(event, win), necesitas acceder al DOM de la ventana para moverla usando estilos:
+
+    win.style.left = `${newLeft}px`;
+    win.style.top = `${newTop}px`;
+
+Estos eventos ((mousemove), (mouseup), (mouseleave)) capturan el movimiento del mouse mientras arrastras la ventana:
+Evento	¿Qué hace?
+(mousemove)	Detecta movimiento del mouse y llama a onDrag() para mover la ventana.
+(mouseup)	Finaliza el movimiento (cuando sueltas el botón del mouse).
+(mouseleave)	Lo mismo que mouseup, pero en caso de que el mouse salga del div sin soltar.
+-->
