@@ -7,6 +7,7 @@
   z-index: 10;
   user-select: none;
   overflow: hidden;
+  min-width: 40%;
 }
 
 .window-content {
@@ -43,21 +44,38 @@
   // background-color: aquamarine;
 }
 
+.window-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  // height: 100%;
+  // margin-right: 10px;
+}
+
+
 .window-actions button {
-  background: rgb(255, 136, 89);
+  background: rgba(5, 5, 5, 0);
   border: none;
   color: white;
-  // cursor: pointer;
-  padding: 5px 8px;
+  width: 25px;
+  height: 25px;
+  // margin-left: 5px;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
 
   &:hover {
-    background: rgb(255, 193, 169);
+    background: rgb(89 89 89);
+    align-items: center;
   }
 }
 
+
+
+
 .header-bottom {
   display: grid;
-  grid-template-columns: 60px 1fr 120px;
+  grid-template-columns: 85px 1fr 120px;
   // background-color: #fffd7d;
   align-items: center; // Alinea verticalmente los elementos
   padding: 0 10px;
@@ -66,55 +84,41 @@
 //Columna 1: Botones adelante / atrás
 .nav-buttons {
   display: flex;
-  gap: 5px;
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0px 4px;
+  }
+
+  button:nth-child(1) img {
+    width: 38px;
+  }
+
+  button:nth-child(2) img {
+    width: 25px;
+  }
 }
+
 
 // Columna 2: Título + barra de navegación
 .nav-center {
   display: grid;
-  grid-template-rows: 40% 60%;
+  grid-template-rows: 50% 50%;
   gap: 2px;
   padding: 0;
 }
 
 .title span {
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: normal;
   color: #f1f1f1;
 }
 
 
 /******************************** BARRA DE DIRECCIONES ********************/
-.address-bar {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 100%;
-  padding: 1px;
-  font-size: 12px;
-  font-family: Arial, sans-serif;
-  border: 1.4px solid transparent;
-  border-radius: 2px;
-  text-indent: 10px;
-  height: 20px;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: var(--aero-transp-nv);
-    border-color: #969696;
-    cursor: pointer;
-
-  }
-
-  &.open .breadcrumb-toggle-btn {
-    display: block;
-  }
-
-  &:hover .breadcrumb-toggle-btn {
-    display: block;
-  }
-}
-
+.address-bar,
 .address-bar-s1 {
   display: flex;
   align-items: center;
@@ -145,11 +149,6 @@
   }
 }
 
-.address-bar.editing {
-  background: white;
-  border: 1px solid #999;
-}
-
 .address-edit-wrapper {
   display: flex;
   align-items: center;
@@ -165,13 +164,6 @@
   border-radius: 2px;
 }
 
-
-.breadcrumb-btn-list {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  position: relative;
-}
 
 .breadcrumb-toggle-btn {
   display: none;
@@ -193,8 +185,6 @@
 
   img {
     pointer-events: none;
-    // height: 16px;
-    // width: 16px;
   }
 }
 
@@ -209,12 +199,18 @@
 .breadcrumb-dropdown-dir {
   position: absolute;
   top: 100%;
-  background: #f0f0f0f7;
+  background: #f0f0f0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   padding: 6px;
   border-radius: 0;
   display: none;
   z-index: 10;
+
+  .breadcrumb-dropdown {
+    width: fit-content;
+    max-width: 100vw;
+    /* Por si hay contenido muy largo, evita desbordar */
+  }
 
   ul {
     margin: 0;
@@ -224,6 +220,8 @@
     li {
       padding: 4px 12px;
       border: 1px solid transparent;
+      white-space: nowrap;
+      /* 👈 Evita que se hagan saltos de línea */
 
       &:hover {
         background-color: #b6f5ff;
@@ -241,8 +239,19 @@
 
 /* Ancho específico solo para el dropdown-dir */
 .breadcrumb-dropdown-dir {
-  right: 0;
-  width: 856px;
+  left: 0;
+  width: 100%;
+
+  li a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+}
+
+.breadcrumb-node .breadcrumb-dropdown li.cancel a {
+  color: #3f3f3f;
 }
 
 /* Nodo breadcrumb */
@@ -294,12 +303,95 @@
 }
 
 
+
 /////////////////////////////////
 .favorites {
   display: flex;
   justify-content: flex-end;
   gap: 5px;
 }
+
+.favorites img {
+  width: 38px;
+}
+
+
+
+/********************************** Estilos de la barra de herramientas **********************************/
+.modal-toolbar {
+  padding: 6px 10px;
+  border-bottom: 1px solid #ffa94d;
+  display: flex;
+  gap: 10px;
+  height: 15%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  // Fondo con gradiente animado tipo aurora
+  background: linear-gradient(115deg,
+      #ff914d 0%,
+      #ff8138 25%,
+      #ff834a 50%,
+      #ff8f49 75%,
+      #ff5927 100%);
+  background-size: 400% 400%;
+  animation: auroraNeon 12s ease infinite;
+
+  // efecto de brillo suave flotante tipo aurora
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center,
+        rgba(255, 185, 115, 0.2),
+        transparent 70%);
+    animation: rotateGlow 30s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: screen;
+  }
+
+  >* {
+    z-index: 1;
+  }
+}
+
+// Animación del fondo
+@keyframes auroraNeon {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// Animación de rotación lenta de brillo
+// @keyframes rotateGlow {
+//   0% { transform: rotate(0deg); }
+//   100% { transform: rotate(360deg); }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
 
 .window-body {
   padding: 10px;

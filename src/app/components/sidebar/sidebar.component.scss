@@ -1,0 +1,330 @@
+:root {
+  --speed: 4s;
+  --aero-color: #00000096;
+  --aero-transp-nv: blur(2px);
+}
+
+.sidebar-container {
+    float: right;
+    // z-index: 9999;
+    width: 200px;
+}
+
+/* SIDEBAR */
+.sidebar-inner {
+  position: fixed;
+  min-width: 200px;
+  height: 100%;
+  background-color: var(--aero-color);
+  backdrop-filter: var(--aero-transp-nv);
+  box-shadow: -2px 2px 5px #303030;
+  border-radius: 2px;
+  transition: all 0.3s;
+//   z-index: 999;
+  padding-top: 3px;
+  overflow: hidden; /* importante para que no se desborde el pseudo-elemento */
+}
+
+.sidebar-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px; /* o ajusta a lo que se vea natural */
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.1) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  clip-path: ellipse(70% 58% at 0% 50%);
+  pointer-events: none;
+}
+
+
+.top-line {
+    height: 1px;
+    width: 90%;
+    margin: 0 auto 0px 0;
+    background: #474747;
+    border-radius: 2px;
+    box-shadow: 0 0 2px #e1e1e1;
+}
+
+.corner-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 11px solid #8f8f8f;
+    /* Color del triángulo */
+    border-left: 11px solid transparent;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.widget {
+    position: relative;
+}
+
+
+.widget.contacts-widget {
+    height: 215px;
+    padding-top: 3px;
+    /* border-top: 2px solid #ff0c0c; */
+    width: 100%;
+    /* background-color: #ff11f3; */
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 0px 6px 12px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.user-profile img {
+    width: 20px;
+    height: 20px;
+    /* border-radius: 50%; */
+    border: 1px solid #ffffff33;
+
+}
+
+.user-profile p {
+    color: #ffffff;
+    margin: 0;
+}
+
+.contacts-widget ul {
+    list-style: none;
+    padding-left: 17px;
+}
+
+.contacts-widget li {
+    position: relative;
+    padding-left: 18px;
+    /* margin-bottom: 1px; */
+    color: #000000;
+}
+
+.contacts-widget li a {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+/* Bullet normal: conectado */
+.contacts-widget li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    background-color: #90ee90;
+    /* Verde claro */
+    border: 2px solid #006400;
+    /* Verde oscuro */
+    border-radius: 50%;
+}
+
+/* Bullet con notificación */
+.contacts-widget li.new-message::before {
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 5px #ffffff, 0 0 10px #00ffcc;
+    /* Efecto "glow" */
+}
+
+/* Texto con notificación */
+.contacts-widget li.new-message a {
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 0 3px #00ffcc;
+}
+
+
+/* OFF-LINE */
+.contacts-widget li.off-line::before {
+    background-color: #9b9b9b;
+    border: 2px solid #6d6d6d;
+}
+
+/* Texto con notificación */
+.contacts-widget li.off-line a {
+    color: #b5b5b5;
+}
+
+
+
+
+/* SEARCH CARD */
+.search-input {
+    width: 90%;
+    margin: 6px 6px;
+    display: block;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: #f7f5f5;
+    background-color: #5a5a5a;
+    border: 1px inset #6e6e6e;
+    border-radius: 8px;
+    /* box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2); */
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #ebebeb;
+    /* font-style: italic; */
+}
+
+
+/* MAIL WIDGET */
+.widget.mail-widget {
+    height: 215px;
+    width: 100%;
+    /* background-color: #ff11f3; */
+}
+
+
+.mail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: #ddd;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.mail-item img {
+    width: 15px;
+    height: 15px;
+    /* border-radius: 50%; */
+}
+
+.mail-item:hover {
+    background: #f9f9f92b;
+    border-radius: 5px;
+    box-shadow: -1px 2px 4px #a5a5a5;
+
+}
+
+.mail-item.new-message {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* .mail-item.off-line {
+  opacity: 0.6;
+} */
+
+/***************************** WIDGET RELOJ **************************/
+.clock-widget {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.clock-wrapper {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  gap: 10px;
+}
+
+/* RELOJ ANALOGICO */
+.clock {
+    width: 45px;
+    height: 45px;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    position: relative;
+    background: radial-gradient(circle at center, rgba(40, 40, 40, 0.8), rgba(10, 10, 10, 0.95));
+    box-shadow: inset -4px 10px 7px rgba(255, 255, 255, 0.7),   /* brillo superior izquierdo */
+    inset 0px 2px 6px rgba(255, 255, 255, 0.7);
+    /* margin: 10px auto; */
+    margin-left: 31px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.hand {
+    width: 50%;
+    height: 2px;
+    background: #ffffff;
+    position: absolute;
+    top: 50%;
+    transform-origin: 100%;
+    transform: rotate(90deg);
+    transition: all 0.05s ease-in-out;
+}
+
+.hour {
+    width: 50%;
+    height: 3px;
+    background: #ffffff;
+}
+
+.minute {
+    width: 50%;
+    height: 2px;
+    background: #ffffff;
+}
+
+.second {
+    width: 50%;
+    height: 1px;
+    background: #ffffff;
+    display: none;
+}
+
+.center-dot {
+    width: 4px;
+    height: 4px;
+    background: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.clock .tick {
+    position: absolute;
+    width: 2px;
+    height: 3px;
+    background-color: #ffffff;
+    top: 44%;
+    left: 51%;
+    transform-origin: bottom center;
+    /* transform: rotate(0deg) translateY(-16px); */
+}
+
+/* RELOJ DIGITAL */
+.clock-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+}
+
+.digital-time {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.date {
+  font-size: 12px;
+  color: #ccc;
+}

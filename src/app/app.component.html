@@ -1,6 +1,6 @@
 <app-desktop>
   <div class="sidebar-wrapper" [class.collapsed]="sidebarCollapsed">
-    <app-sidebar></app-sidebar>
+    <app-sidebar *ngIf="!sidebarCollapsed"></app-sidebar>
   </div>
 
   <div class="content-wrapper" [class.expanded]="sidebarCollapsed">
@@ -9,56 +9,6 @@
         (minimize)="minimizeWindow(win.id)" [hidden]="!win.visible">
       </app-window>
     </ng-container>
-
-    <!-- ********************************************** preuba  ***************************************** -->
-    <!-- <div class="window">
-      <div class="window-header">
-
-        <div class="header-top">
-          <div class="window-actions">
-            <button>−</button>
-            <button>
-              '🗖'
-            </button>
-            <button>✖</button>
-          </div>
-        </div>
-
-        <div class="header-bottom">
-
-          <div class="nav-buttons">
-            <button>⬅</button>
-            <button>➡</button>
-          </div>
-
-          <div class="nav-center">
-
-            <div class="title">
-              <span class="window-title">titulo de la ventana</span>
-            </div>
-
-            <div class="address-bar">
-              <input type="text" name="" id="" placeholder="https://www.ejemplo.com">
-              <button class="breadcrumb-toggle-btn" id="toggle-dir-dropdown">
-                ▼
-              </button>
-            </div>
-          </div>
-
-          <div class="favorites">
-            <button>📁</button>
-            <button>🔍</button>
-            <button>⭐</button>
-          </div>
-
-        </div>
-      </div>
-      <div class="window-body">
-        <ng-template #contentContainer></ng-template>
-      </div>
-    </div> -->
-    <!-- ********************************************** fin preuba  ***************************************** -->
-
 
   </div>
 

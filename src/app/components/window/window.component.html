@@ -19,9 +19,10 @@
 
             <!-- Columna 1: Botones adelante / atrás -->
             <div class="nav-buttons">
-                <button>⬅</button>
-                <button>➡</button>
+                <button><img src="/assets/icons/btn/arrow-forward-des.png" alt="Adelante"></button>
+                <button><img src="/assets/icons/btn/arrow-back-des.png" alt="Atrás"></button>
             </div>
+
 
             <!-- Columna 2: Título + barra de navegación -->
             <div class="nav-center">
@@ -38,19 +39,15 @@
                         <ng-container *ngIf="!isEditingAddress; else editingMode">
                             <!-- Breadcrumb visible -->
                             <div class="breadcrumb-node" id="node-pc">
-                                <span class="node-label">Mi PC</span>
+                                <span class="node-label">Este Equipo</span>
                                 <img class="node-arrow" src="/assets/icons/btn/caret-right-solid-w.svg" alt="Abrir">
                                 <div class="breadcrumb-dropdown">
                                     <ul>
-                                        <li><a href="#"> <img src="/assets/icons/location-icon-sm/desktop.png" alt="">
-                                                Desktop</a>
-                                        </li>
-                                        <li><a href="#"> <img src="/assets/icons/location-icon-sm/document-open.png"
-                                                    alt="">Documents</a></li>
-                                        <li><a href="#"> 
-                                            <img src="/assets/icons/location-icon-sm/computer.png"
-                                                    alt="">Computer</a>
-                                        </li>
+                                        <li class="cancel"><a href="#"> <b>Este Equipo</b> </a></li>
+                                        <li class="cancel"><a href="#">Ayuda</a></li>
+                                        <li class="cancel"><a href="#">Mis Documentos</a></li>
+                                        <li class="cancel"><a href="#">Papelera</a></li>
+                                        <li class="cancel"><a href="#">Buscar</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -60,17 +57,18 @@
                                 <img class="node-arrow" src="/assets/icons/btn/caret-right-solid-w.svg" alt="Abrir">
                                 <div class="breadcrumb-dropdown">
                                     <ul>
-                                        <li><a href="#">Documentos</a></li>
-                                        <li><a href="#">Música</a></li>
-                                        <li><a href="#">Imágenes</a></li>
+                                        <li class="cancel"><a href="#">Administrador de Documentos</a></li>
                                         <li><a href="#"><b>Contactos</b></a></li>
-                                        <li><a href="#">Videos</a></li>
-                                        <li><a href="#">Mi PC</a></li>
+                                        <li class="cancel"><a href="#">Panel de Control</a></li>
+                                        <li class="cancel"><a href="#">Documentos</a></li>
+                                        <li class="cancel"><a href="#">Juegos</a></li>
+                                        <li class="cancel"><a href="#">Disco Local</a></li>
+                                        <li class="cancel"><a href="#">Música</a></li>
+                                        <li class="cancel"><a href="#">Fotos y Videos</a></li>
+                                        <li class="cancel"><a href="#">Documentos compartidos</a></li>
                                     </ul>
                                 </div>
                             </div>
-
-
                         </ng-container>
 
                         <!-- Editable input -->
@@ -81,28 +79,24 @@
 
                             </div>
                         </ng-template>
-
                     </div>
 
-  
-                        <div class="breadcrumb-btn-list">
-                            <button class="breadcrumb-toggle-btn" id="toggle-dir-dropdown">
-                                <img class="node-arrow" src="/assets/icons/btn/caret-down-solid.svg" alt="Abrir">
-                            </button>
+                    <button class="breadcrumb-toggle-btn" id="toggle-dir-dropdown">
+                        <img class="node-arrow" src="/assets/icons/btn/caret-down-solid.svg" alt="Abrir">
+                    </button>
 
-                            <div class="breadcrumb-dropdown-dir">
-                                <ul>
-                                    <li><a href="#">Docdddddumentos</a></li>
-                                    <li><a href="#">Música</a></li>
-                                    <li><a href="#">Imágenes</a></li>
-                                    <li><a href="#"><b>Contactos</b></a></li>
-                                    <li><a href="#">Videos</a></li>
-                                    <li><a href="#">Mi PC</a></li>
-                                </ul>
-                            </div>
-                        </div>
-       
-
+                    <div class="breadcrumb-dropdown-dir">
+                        <ul>
+                            <li><a href="#"> <img src="/assets/icons/location-icon-sm/desktop.png" alt="">
+                                    Escritorio</a>
+                            </li>
+                            <li><a href="#"> <img src="/assets/icons/location-icon-sm/document-open.png" alt="">Mis
+                                    Documentos</a></li>
+                            <li><a href="#">
+                                    <img src="/assets/icons/location-icon-sm/computer.png" alt="">Este Equipo</a>
+                            </li>
+                        </ul>
+                    </div>
 
                 </div>
 
@@ -111,9 +105,8 @@
 
             <!-- Columna 3: Iconos de favoritos -->
             <div class="favorites">
-                <button>📁</button>
-                <button>🔍</button>
-                <button>⭐</button>
+                <img src="assets/icons/btn/system-search.png" alt="Buscar">
+                <img src="assets/icons/btn/favoritos.png" alt="Favoritos">
             </div>
 
         </div>
@@ -121,6 +114,13 @@
 
     </div>
     <!-- Fin Barra de título -->
+
+
+    <!-- Barra de herramientas -->
+    <div class="modal-toolbar">
+        <!-- <button>Copiar</button>-->
+        <!-- Puedes agregar íconos o SVGs más adelante -->
+    </div>
 
     <div class="window-body">
         <!-- Aquí se inserta el componente dinámico -->
