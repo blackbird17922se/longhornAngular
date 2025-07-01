@@ -61,15 +61,22 @@
 .sidebar-button:hover {
   background-image: url('/assets/icons/taskbar/min-sd-dw-hover.png');
 }
+.sidebar-button:active {
+  background-image: url('/assets/icons/taskbar/min-sd-dw-pr.png');
+}
+
 
 .sidebar-button.collapsed {
   background-image: url('/assets/icons/taskbar/min-sd-up.png');
 }
 
 .sidebar-button.collapsed:hover {
-  background-image: url('/assets/icons/taskbar/min-sd-up.png');
+  background-image: url('/assets/icons/taskbar/min-sd-up-hover.png');
 }
 
+.sidebar-button.collapsed:active {
+  background-image: url('/assets/icons/taskbar/min-sd-up-active.png');
+}
 
 /*************************** BOTON START **************************/
 .start-button {

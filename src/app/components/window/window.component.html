@@ -19,8 +19,8 @@
 
             <!-- Columna 1: Botones adelante / atrás -->
             <div class="nav-buttons">
-                <button><img src="/assets/icons/btn/arrow-forward-des.png" alt="Adelante"></button>
-                <button><img src="/assets/icons/btn/arrow-back-des.png" alt="Atrás"></button>
+                <button><img src="/assets/icons/window-actions/ar-left-inactive-disable.png" alt="Adelante"></button>
+                <button><img src="/assets/icons/window-actions/ar-back-position.png" alt="Atrás"></button>
             </div>
 
 
@@ -105,8 +105,10 @@
 
             <!-- Columna 3: Iconos de favoritos -->
             <div class="favorites">
-                <img src="assets/icons/btn/system-search.png" alt="Buscar">
-                <img src="assets/icons/btn/favoritos.png" alt="Favoritos">
+                <button><img src="assets/icons/btn/system-search.png" alt="Buscar"></button>
+
+                <!-- <img src="assets/icons/btn/favoritos.png" alt="Favoritos"> -->
+                <button class="favorite-btn"></button>
             </div>
 
         </div>
@@ -118,9 +120,57 @@
 
     <!-- Barra de herramientas -->
     <div class="modal-toolbar">
-        <!-- <button>Copiar</button>-->
-        <!-- Puedes agregar íconos o SVGs más adelante -->
+        <div class="header-toolbar">
+            <div class="standart-bar">
+                <button><img src="/assets/icons/window/standart-bar/gtk-print.png" alt="Atrás"></button>
+                <button><img src="/assets/icons/window/standart-bar/gtk-undo-ltr.png" alt="Adelante"></button>
+                <button><img src="/assets/icons/window/standart-bar/stock_delete.png" alt="Actualizar"></button>
+            </div>
+            <div class="option-app-section">
+                <button>
+                    <img src="/assets/icons/window/standart-bar/contacts/new-contact.png" alt="Opción 1">
+                    <span>Nuevo Contacto</span>
+                </button>
+                <button>
+                    <img src="/assets/icons/window/standart-bar/contacts/config-users.png" alt="Opción 2">
+                    <span>Nuevo Grupo</span>
+                </button>
+                <button>
+                    <img src="/assets/icons/window/standart-bar/contacts/IconGroup100.ico" alt="Opción 3">
+                    <span>Nueva Compañía</span>
+                </button>
+            </div>
+        </div>
+        <div class="footer-toolbar">
+            <div class="footer-left">
+                <span>1 Contacto</span>
+            </div>
+            <div class="footer-right">
+                <div class="column">
+                    <button><img src="/assets/icons/window/standart-bar/contacts/footer-options/import-address-book.png"
+                            alt="Imprimir">
+                        <span>Importar libro de direcciones</span>
+                    </button>
+                    <button><img src="/assets/icons/window/standart-bar/contacts/footer-options/share-address-book.png"
+                            alt="Deshacer">
+                        <span>Compartir libro de direcciones</span>
+                    </button>
+                    <button><img src="/assets/icons/window/standart-bar/contacts/footer-options/sync.png"
+                            alt="Actualizar">
+                        <span>Sincronizar contactos</span>
+                    </button>
+                </div>
+                <div class="column">
+                    <button><img src="/assets/icons/window/standart-bar/contacts/footer-options/merge-contacts.png"
+                            alt="Actualizar">
+                        <span>Fusionar contactos duplicados</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
+
 
     <div class="window-body">
         <!-- Aquí se inserta el componente dinámico -->
