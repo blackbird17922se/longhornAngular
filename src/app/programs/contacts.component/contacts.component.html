@@ -1,6 +1,273 @@
-<h2>Mis Contactos</h2>
-<ul>
-  <li>Laura Pausini</li>
-  <li>Christopher Santiago</li>
-  <li>Arianna</li>
-</ul>
+<!-- MODAL CONTACTO -->
+<div class="modal-adminpro-general">
+
+  <div class="header-modal">
+    <div class="header-top">
+      <div class="window-actions">
+        <button (click)="minimize.emit()">−</button>
+        <button (click)="close.emit()">✖</button>
+      </div>
+    </div>
+
+    <div class="header-bottom">
+      <!-- aqui se le puede poner un icono de contactos -->
+      <span class="modal-title">Detalles De Nuevo Contacto</span>
+    </div>
+
+  </div>
+
+  <div class="modal-body">
+
+    <!-- Imagen -->
+    <div class="">
+      <div class="photo-cont">
+        <a href="#"><img src="/assets/images/contacts/avatar-contact.png" alt=""></a>
+      </div>
+    </div>
+
+    <!-- Sección Formulario -->
+    <div class="form-section-1">
+      <!-- NOMBRE -->
+      <div class="">
+        <label>Nombre:</label>
+        <span class="a-input" (click)="openForm('name')">Agregar Nuevo Nombre</span>
+      </div>
+
+      <div role="menu" class="min-form" *ngIf="selectedForm === 'name'" #nameForm>
+        <div class="header-min-form">
+          <p>Editar Nombre Completo</p>
+          <a class="btn-hecho-mf" role="button" (click)="closeForm()">Hecho</a>
+        </div>
+        <div class="body-min-form">
+          <div class="form-group-inner">
+            <label>Título:</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="form-group-inner">
+            <label>Primero:</label>
+            <input type="text" class="form-control" />
+          </div>
+                    <div class="form-group-inner">
+            <label>Título:</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="form-group-inner">
+            <label>Primero:</label>
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="">
+        <label>Email:</label>
+        <span class="a-input" (click)="openForm('email')">Agregar Nuevo Email</span>
+      </div>
+
+      <div role="menu" class="min-form" *ngIf="selectedForm === 'email'" #emailForm>
+        <div class="header-min-form">
+          <p>Editar Email Completo</p>
+          <a class="btn-hecho-mf" role="button" (click)="closeForm()">Hecho</a>
+        </div>
+        <div class="body-min-form">
+          <div class="form-group-inner">
+            <label>Email:</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="form-group-inner">
+            <label>Tipo:</label>
+            <select class="form-control">
+              <option>Principal</option>
+              <option>Trabajo</option>
+              <option>Hogar</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+    </div> <!-- Fin seccion 1 -->
+
+
+
+    <div class="row">
+
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+        <div class="basic-login-inner">
+          <form action="#">
+
+
+
+            <!-- EMAIL -->
+            <div class="form-group-inner">
+              <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                  <label>Email:</label>
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                  <li class="nav-item" id="nvItemEmail">
+                    <span data-toggle="dropdown" role="button" aria-expanded="false"
+                      class="nav-link dropdown-toggle a-input">Agregar Nuevo Email</span>
+
+                    <div role="menu" class="dropdown-header-top author-log dropdown-menu animated fadeIn min-form ">
+
+                      <div class="header-min-form">
+                        <div class="row">
+                          <div class="col-lg-8 col-md-8">
+                            <p>Editar Dirección E-mail</p>
+                          </div>
+                          <div class="col-lg-4 col-md-4"><a class="btn-hecho-mf" role="button">Hecho</a></div>
+                        </div>
+                      </div>
+
+                      <div class="body-min-form">
+
+                        <div class="form-group-inner">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 cnt-label">
+                              <label>Email:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                              <input id="" type="email" class="form-control" placeholder="" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group-inner">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 cnt-label">
+                              <label>Tipo:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                              <div class="form-select-list">
+                                <select class="form-control custom-select-value" name="account">
+                                  <option> </option>
+                                  <option>Principal</option>
+                                  <option>Hogar</option>
+                                  <option>Trabajo</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </li>
+                </div>
+              </div>
+            </div>
+
+            <!-- TELEFONO -->
+            <div class="form-group-inner">
+              <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                  <label>Telefono:</label>
+                </div>
+
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                  <li class="nav-item" id="nvItemTel">
+                    <span data-toggle="dropdown" role="button" aria-expanded="false"
+                      class="nav-link dropdown-toggle a-input">Agregar Nuevo Telefono</span>
+
+                    <div role="menu" class="dropdown-header-top author-log dropdown-menu animated fadeIn min-form ">
+                      <p>Editar Número de Telefono</p>
+
+                      <div class="body-min-form">
+
+                        <div class="form-group-inner">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 cnt-label">
+                              <label>Código de País:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                              <input id="" type="text" class="form-control" placeholder="" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group-inner">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 cnt-label">
+                              <label>Código de Area:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                              <input id="" type="text" class="form-control" placeholder="" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group-inner">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 cnt-label">
+                              <label>Numero:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                              <input id="" type="number" class="form-control" placeholder="" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group-inner">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 cnt-label">
+                              <label>Extensión:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                              <input id="" type="number" class="form-control" placeholder="" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group-inner">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 cnt-label">
+                              <label>PIN:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                              <input id="" type="number" class="form-control" placeholder="" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group-inner">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 cnt-label">
+                              <label>Tipo:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                              <div class="form-select-list">
+                                <select class="form-control custom-select-value" name="account">
+                                  <option> </option>
+                                  <option>Principal</option>
+                                  <option>Hogar</option>
+                                  <option>Celular</option>
+                                  <option>Fax</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </li>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <a data-dismiss="modal" href="#">Cancel</a>
+    <a href="#">Process</a>
+  </div>
+</div>

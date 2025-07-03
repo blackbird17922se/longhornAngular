@@ -105,7 +105,7 @@ export class WindowComponent implements AfterViewInit, OnDestroy {
     this.inicializarbreadcrumb();
   }
 
-   /** Cierra edición si se hace clic fuera del address-bar */
+  /** Cierra edición si se hace clic fuera del address-bar */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
@@ -257,5 +257,15 @@ export class WindowComponent implements AfterViewInit, OnDestroy {
   stopDrag() {
     this.dragging = false; // Detiene el arrastre
   }
+
+  accordionOpen = {
+    favorites: false,
+    properties: false
+  };
+
+  toggleAccordion(section: 'favorites' | 'properties') {
+    this.accordionOpen[section] = !this.accordionOpen[section];
+  }
+
 
 }
